@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import PropTypes from 'prop-types';
-import FormControl from '@material-ui/core/FormControl';
+import FormControl, { FormControlProps } from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
+import FormLabel from '@material-ui/core/FormLabel';
+import RadioGroup, { RadioGroupProps } from '@material-ui/core/RadioGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import get from 'lodash/get';
-import { useInput, FieldTitle } from 'ra-core';
+import { useInput, FieldTitle, InputProps } from 'ra-core';
 
 import sanitizeRestProps from './sanitizeRestProps';
 import InputHelperText from './InputHelperText';
 import RadioButtonGroupInputItem from './RadioButtonGroupInputItem';
+import { InputWithOptionsProps } from './InputWithOptions';
 
 const useStyles = makeStyles({
     label: {
@@ -75,7 +76,9 @@ const useStyles = makeStyles({
  *
  * The object passed as `options` props is passed to the material-ui <RadioButtonGroup> component
  */
-export const RadioButtonGroupInput = ({
+export const RadioButtonGroupInput: FunctionComponent<
+    InputWithOptionsProps & InputProps<RadioGroupProps> & FormControlProps
+> = ({
     choices,
     helperText,
     label,
@@ -114,14 +117,14 @@ export const RadioButtonGroupInput = ({
             margin="normal"
             {...sanitizeRestProps(rest)}
         >
-            <InputLabel component="legend" shrink className={classes.label}>
+            <FormLabel component="legend" className={classes.label}>
                 <FieldTitle
                     label={label}
                     source={source}
                     resource={resource}
                     isRequired={isRequired}
                 />
-            </InputLabel>
+            </FormLabel>
 
             <RadioGroup id={id} {...input} {...options}>
                 {choices.map(choice => (
